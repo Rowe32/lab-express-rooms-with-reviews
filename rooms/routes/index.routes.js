@@ -32,11 +32,8 @@ router.get("/login", (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log("LINE 35", email);
   const loggedUser = await User.findOne({ email : email });
-  console.log(loggedUser)
   const checkPassword = await bcrypt.compare(password, loggedUser.password);
-  console.log(checkPassword)
   if (checkPassword) {
     req.session.currentUser = loggedUser;
     res.redirect("/profile");

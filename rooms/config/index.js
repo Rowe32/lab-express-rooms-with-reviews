@@ -25,10 +25,13 @@ module.exports = (app) => {
   app.use(logger("dev"));
 
   app.use(session({
-    secret: process.env.SESSION_SECRET,
-    store: MongoStore.create({ mongoUrl: "mongodb://localhost/lab-express-basic-auth" })
-  }));
-  
+    store : MongoStore.create({
+      mongoUrl : require("../db/const")
+    }),
+    secret : process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  }))
   // To have access to `body` property in the request
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
